@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DefaultEcs;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,6 +9,7 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private World _world;
 
     public Game1()
     {
@@ -18,8 +20,7 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-
+        _world = new World();
         base.Initialize();
     }
 
