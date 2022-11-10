@@ -7,6 +7,8 @@ namespace _2dbullethell;
 
 public class Game1 : Game
 {
+    private Texture2D playerTexture;
+
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private World _world;
@@ -28,6 +30,8 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+        playerTexture = Content.Load<Texture2D>("Player");
+
         // TODO: use this.Content to load your game content here
     }
 
@@ -44,6 +48,10 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
+
+        _spriteBatch.Begin();
+        _spriteBatch.Draw(playerTexture, new Vector2(0, 0), Color.White);
+        _spriteBatch.End();
 
         // TODO: Add your drawing code here
 
