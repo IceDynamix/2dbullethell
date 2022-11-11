@@ -9,14 +9,16 @@ namespace _2dbullethell.Systems;
 public class PlayerInputSystem : EntityUpdateSystem
 {
     private ComponentMapper<Velocity> _velocityMapper;
-
-    public PlayerInputSystem() : base(Aspect.All(typeof(Player), typeof(Velocity)))
+    private ComponentMapper<Weapon> _weaponMapper;
+    
+    public PlayerInputSystem() : base(Aspect.All(typeof(Player), typeof(Velocity), typeof(Weapon)))
     {
     }
 
     public override void Initialize(IComponentMapperService mapperService)
     {
         _velocityMapper = mapperService.GetMapper<Velocity>();
+        _weaponMapper = mapperService.GetMapper<Weapon>();
     }
 
     public override void Update(GameTime gameTime)
@@ -26,6 +28,7 @@ public class PlayerInputSystem : EntityUpdateSystem
         foreach (var entityId in ActiveEntities)
         {
             var velocity = _velocityMapper.Get(entityId);
+            var weapon = _weaponMapper.Get(entityId);
 
             var nextDirection = Vector2.Zero;
 
@@ -37,6 +40,11 @@ public class PlayerInputSystem : EntityUpdateSystem
 
             var nextVelocity = nextDirection * baseVelocity * gameTime.ElapsedGameTime.Milliseconds;
             velocity.Value = nextVelocity;
+
+            var mouseState = Mouse.GetState();
+            if (mouseState.LeftButton == ButtonState.Pressed) weapon.IsShooting = true;
+            else weapon.IsShooting = false;
+            
         }
     }
 }
