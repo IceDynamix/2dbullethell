@@ -24,10 +24,16 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
+        _graphics.PreferredBackBufferWidth = 1000;
+        _graphics.PreferredBackBufferHeight = 1000;
+        _graphics.ApplyChanges();
+        
         _world = new WorldBuilder()
             .AddSystem(new PlayerInputSystem())
+            .AddSystem(new GameBoundCollisionSystem(_graphics))
             .AddSystem(new VelocitySystem())
             .AddSystem(new RenderSystem(new SpriteBatch(GraphicsDevice)))
+           
             .Build();
 
         Components.Add(_world);
@@ -44,6 +50,7 @@ public class Game1 : Game
         });
         player.Attach(new Sprite(Content.Load<Texture2D>("player")));
         player.Attach(new Velocity());
+        player.Attach(new PhysicalHitBox(100, 100));
     }
 
     protected override void Update(GameTime gameTime)
