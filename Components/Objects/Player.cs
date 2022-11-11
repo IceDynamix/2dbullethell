@@ -1,6 +1,6 @@
 ﻿namespace _2dbullethell.Components;
 
-public struct Player
+public class Player
 {
     public string Name;
 }

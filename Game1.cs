@@ -1,14 +1,16 @@
-﻿using DefaultEcs;
+﻿using _2dbullethell.Components;
+using _2dbullethell.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
+using MonoGame.Extended.Entities;
+using MonoGame.Extended.Sprites;
 
 namespace _2dbullethell;
 
 public class Game1 : Game
 {
-    private Texture2D playerTexture;
-
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private World _world;
@@ -22,17 +24,24 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        _world = new World();
+        _world = new WorldBuilder()
+            .AddSystem(new RenderSystem(new SpriteBatch(GraphicsDevice)))
+            .Build();
+
+        Components.Add(_world);
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        playerTexture = Content.Load<Texture2D>("Player");
-
-        // TODO: use this.Content to load your game content here
+        var player = _world.CreateEntity();
+        player.Attach(new Player {Name = "Noah"});
+        player.Attach(new Transform2
+        {
+            Position = new Vector2(250, 250),
+            Scale = new Vector2(0.5f, 0.5f)
+        });
+        player.Attach(new Sprite(Content.Load<Texture2D>("player")));
     }
 
     protected override void Update(GameTime gameTime)
@@ -40,21 +49,15 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
-
+        _world.Update(gameTime);
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.Black);
 
-        _spriteBatch.Begin();
-        _spriteBatch.Draw(playerTexture, new Vector2(0, 0), Color.White);
-        _spriteBatch.End();
-
-        // TODO: Add your drawing code here
-
+        _world.Draw(gameTime);
         base.Draw(gameTime);
     }
 }
