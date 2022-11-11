@@ -50,6 +50,7 @@ public class Game1 : Game
         });
         player.Attach(new Sprite(Content.Load<Texture2D>("player")));
         player.Attach(new Velocity());
+        player.Attach(new Weapon());
         player.Attach(new PhysicalHitBox(100, 100));
     }
 

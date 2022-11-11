@@ -34,19 +34,18 @@ public class GameBoundCollisionSystem : EntityUpdateSystem
             var transform = _transformMapper.Get(entityId);
             var hitBoxWidth = _physicalHitBoxMapper.Get(entityId).Width;
             var hitBoxHeight = _physicalHitBoxMapper.Get(entityId).Height;
+
+            if (velocity.Value.X < 0f && transform.Position.X - hitBoxWidth <= 0f)
+                transform.Position = new Vector2(0 +  hitBoxWidth, transform.Position.Y);
+            else if(velocity.Value.X > 0f && transform.Position.X + hitBoxWidth >= _graphics.PreferredBackBufferWidth)
+                transform.Position = new Vector2(_graphics.PreferredBackBufferWidth - hitBoxWidth, transform.Position.Y);
             
-            if (velocity.Value.X < 0f && transform.Position.X - hitBoxWidth <= 0f ||
-                velocity.Value.X> 0f && transform.Position.X + hitBoxWidth >= _graphics.PreferredBackBufferWidth)
-            {
-                velocity.Value.X = 0f;
-            }
 
-            if (velocity.Value.Y < 0f && transform.Position.Y - hitBoxHeight <= 0f ||
-                velocity.Value.Y > 0f && transform.Position.Y + hitBoxHeight >= _graphics.PreferredBackBufferHeight)
-            {
-                velocity.Value.Y = 0f;
-            }
-
+            if (velocity.Value.Y < 0f && transform.Position.Y - hitBoxHeight <= 0f)
+                transform.Position = new Vector2(transform.Position.X, 0 + hitBoxHeight);
+            else if (velocity.Value.Y > 0f && transform.Position.Y + hitBoxHeight >= _graphics.PreferredBackBufferHeight)
+                transform.Position = new Vector2(transform.Position.X, _graphics.PreferredBackBufferHeight - hitBoxHeight);
+            
         }
     }
 }
