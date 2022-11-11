@@ -25,6 +25,7 @@ public class Game1 : Game
     protected override void Initialize()
     {
         _world = new WorldBuilder()
+            .AddSystem(new PlayerInputSystem())
             .AddSystem(new VelocitySystem())
             .AddSystem(new RenderSystem(new SpriteBatch(GraphicsDevice)))
             .Build();
@@ -42,7 +43,7 @@ public class Game1 : Game
             Scale = new Vector2(0.5f, 0.5f)
         });
         player.Attach(new Sprite(Content.Load<Texture2D>("player")));
-        player.Attach(new Velocity(new Vector2(50f, 20f)));
+        player.Attach(new Velocity());
     }
 
     protected override void Update(GameTime gameTime)

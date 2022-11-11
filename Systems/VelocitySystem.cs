@@ -28,7 +28,7 @@ public class VelocitySystem : EntityUpdateSystem
             var velocity = _velocityMapper.Get(entityId);
             var transform = _transformMapper.Get(entityId);
 
-            var traveledDistance = Vector2.Multiply(velocity.Value, gameTime.ElapsedGameTime.Milliseconds / 1000f);
+            var traveledDistance = velocity.Value * gameTime.ElapsedGameTime.Milliseconds / 1000f;
 
             transform.Position += traveledDistance;
         }
