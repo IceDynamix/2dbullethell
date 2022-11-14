@@ -16,6 +16,7 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     private World _world;
     private DrawSystem _drawSystem;
+    private VelocitySystem _velocitySystem;
 
     public Game1()
     {
@@ -34,6 +35,8 @@ public class Game1 : Game
         _world = new World();
 
         _drawSystem = new DrawSystem(_world, new SpriteBatch(GraphicsDevice));
+        _velocitySystem = new VelocitySystem(_world);
+        
         
         base.Initialize();
     }
@@ -66,6 +69,8 @@ public class Game1 : Game
             Exit();
 
         base.Update(gameTime);
+        
+        _velocitySystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
     }
 
     protected override void Draw(GameTime gameTime)
