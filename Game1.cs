@@ -1,10 +1,8 @@
 ﻿
-using System;
 using _2dbullethell.Components;
 using _2dbullethell.Components.Objects;
 using _2dbullethell.Systems;
 using DefaultEcs;
-using DefaultEcs.System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -55,7 +53,7 @@ public class Game1 : Game
         {
             Texture = texture,
             Color = Color.White,
-            Size = new Vector2(50,50),
+            Size = new Vector2(50, 50),
         });
         player.Set(new Transform()
         {
@@ -66,27 +64,27 @@ public class Game1 : Game
         player.Set(new Player());
         player.Set(new Velocity());
     }
-    
+
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
+            Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-        
-        
-  
+
+
+        _playerMovementInputSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
         _velocitySystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-        _playerMovementInputSystem.Update((float)gameTime.ElapsedGameTime.Milliseconds);
+
         base.Update(gameTime);
-      
     }
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Black);  
-        
+        GraphicsDevice.Clear(Color.Black);
+
         _drawSystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-        
+
         base.Draw(gameTime);
     }
 }
