@@ -1,12 +1,9 @@
-﻿using _2dbullethell.Components;
-using _2dbullethell.Systems;
+﻿
 using DefaultEcs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended;
-using MonoGame.Extended.Entities;
-using MonoGame.Extended.Sprites;
+
 
 namespace _2dbullethell;
 
