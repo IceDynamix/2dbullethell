@@ -1,5 +1,7 @@
 ﻿
+using System;
 using _2dbullethell.Components;
+using _2dbullethell.Components.Objects;
 using _2dbullethell.Systems;
 using DefaultEcs;
 using DefaultEcs.System;
@@ -17,13 +19,13 @@ public class Game1 : Game
     private World _world;
     private DrawSystem _drawSystem;
     private VelocitySystem _velocitySystem;
+    private PlayerMovementInputSystem _playerMovementInputSystem;
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-       
     }
 
     protected override void Initialize()
@@ -36,8 +38,9 @@ public class Game1 : Game
 
         _drawSystem = new DrawSystem(_world, new SpriteBatch(GraphicsDevice));
         _velocitySystem = new VelocitySystem(_world);
-        
-        
+        _playerMovementInputSystem = new PlayerMovementInputSystem(_world);
+
+
         base.Initialize();
     }
 
@@ -60,6 +63,8 @@ public class Game1 : Game
             Rotation = 0,
             Scale = new Vector2(0.5f, 0.5f),
         });
+        player.Set(new Player());
+        player.Set(new Velocity());
     }
     
 
@@ -67,10 +72,13 @@ public class Game1 : Game
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-
-        base.Update(gameTime);
         
+        
+  
         _velocitySystem.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+        _playerMovementInputSystem.Update((float)gameTime.ElapsedGameTime.Milliseconds);
+        base.Update(gameTime);
+      
     }
 
     protected override void Draw(GameTime gameTime)

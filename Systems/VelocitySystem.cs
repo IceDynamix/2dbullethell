@@ -1,4 +1,5 @@
-﻿using _2dbullethell.Components;
+﻿using System;
+using _2dbullethell.Components;
 using DefaultEcs;
 using DefaultEcs.System;
 using DefaultEcs.Threading;
