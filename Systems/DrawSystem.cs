@@ -8,7 +8,7 @@ namespace _2dbullethell.Systems;
 
 public class DrawSystem : AEntitySetSystem<float>
 {
-    private SpriteBatch _spriteBatch;
+    private readonly SpriteBatch _spriteBatch;
     
     public DrawSystem(World world, SpriteBatch spriteBatch) : base(world.GetEntities().With<Sprite>().With<Transform>().AsSet())
     {
@@ -25,7 +25,7 @@ public class DrawSystem : AEntitySetSystem<float>
         ref Sprite sprite = ref entity.Get<Sprite>();
         ref Transform transform = ref entity.Get<Transform>();
         
-        _spriteBatch.Draw(sprite.Texture, transform.Position,null, sprite.Color, transform.Rotation, transform.Position, sprite.Size * transform.Scale, SpriteEffects.None, 0f );
+        _spriteBatch.Draw(sprite.Texture, transform.Position,null, sprite.Color, transform.Rotation, transform.Position, transform.Scale, SpriteEffects.None, 0f );
     }
 
     protected override void PostUpdate(float elapsedTime)
