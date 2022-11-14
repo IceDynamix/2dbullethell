@@ -1,5 +1,6 @@
 ﻿using _2dbullethell.Components;
 using _2dbullethell.Systems;
+using DefaultEcs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -27,47 +28,29 @@ public class Game1 : Game
         _graphics.PreferredBackBufferWidth = 1000;
         _graphics.PreferredBackBufferHeight = 1000;
         _graphics.ApplyChanges();
-        
-        _world = new WorldBuilder()
-            .AddSystem(new PlayerInputSystem())
-            .AddSystem(new GameBoundCollisionSystem(_graphics))
-            .AddSystem(new VelocitySystem())
-            .AddSystem(new RenderSystem(new SpriteBatch(GraphicsDevice)))
-           
-            .Build();
 
-        Components.Add(_world);
+        _world = new World();
+
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
         var player = _world.CreateEntity();
-        player.Attach(new Player {Name = "Noah"});
-        player.Attach(new Transform2
-        {
-            Scale = new Vector2(0.5f, 0.5f)
-        });
-        player.Attach(new Sprite(Content.Load<Texture2D>("player")));
-        player.Attach(new Velocity());
-        player.Attach(new Weapon());
-        player.Attach(new PhysicalHitBox(100, 100));
     }
 
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-
-        _world.Update(gameTime);
+        
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
-
-        _world.Draw(gameTime);
+        
         base.Draw(gameTime);
     }
 }
