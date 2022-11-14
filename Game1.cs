@@ -55,7 +55,7 @@ public class Game1 : Game
         {
             Position = new Vector2(100, 100),
             Rotation = 0,
-            Scale = new Vector2(0.005f, 0.005f),
+            Scale = new Vector2(0.5f, 0.5f),
         });
     }
     
