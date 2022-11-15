@@ -12,7 +12,7 @@ namespace _2dbullethell.Systems;
 public class PlayerMovementInputSystem : AEntitySetSystem<float>
 {
 
-    private const float PlayerMovementSpeed = 100f;
+    private const float PlayerMovementSpeed = 0.05f;
     
     public PlayerMovementInputSystem(World world) : base(world.GetEntities().With<Player>().With<Velocity>().AsSet())
     {
@@ -29,7 +29,6 @@ public class PlayerMovementInputSystem : AEntitySetSystem<float>
         if (keyboardState.IsKeyDown(Keys.S)) newVelocity += new Vector2(0, 1);
         if (keyboardState.IsKeyDown(Keys.A)) newVelocity += new Vector2(-1, 0);
         if (keyboardState.IsKeyDown(Keys.D)) newVelocity += new Vector2(1, 0);
-   
 
         velocity.Value = newVelocity * PlayerMovementSpeed * elapsedTime;
 
