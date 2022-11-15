@@ -47,7 +47,35 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         var texture = Content.Load<Texture2D>("player");
+        var texture2 = Content.Load<Texture2D>("enemy");
 
+        var enemy = _world.CreateEntity();
+        enemy.Set(new Sprite()
+        {
+            Texture = texture2,
+            Color = Color.White,
+            Size = new Vector2(50, 50),
+        });
+        enemy.Set(new Transform()
+        {
+            Position = new Vector2(100, 600),
+            Rotation = 0,
+            Scale = new Vector2(0.5f, 0.5f),
+        });
+        enemy.Set(new Velocity());
+        enemy.Set(new Health()
+        {
+            Value = 100
+        });
+        enemy.Set(new HitBox()
+        {
+            Radius = 100
+        });
+        enemy.Set(new Damage()
+        {
+            Value = 10
+        });
+        
         var player = _world.CreateEntity();
         player.Set(new Sprite()
         {
